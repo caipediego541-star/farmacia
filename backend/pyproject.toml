@@ -1,0 +1,16 @@
+[project]
+name = "api-flask"
+version = "0.1.0"
+description = "Backend del sistema de gestión para farmacia"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "flask>=3.1.3",
+    "flask-cors>=6.0.5",
+    "flask-sqlalchemy>=3.1.1",
+    "pymysql>=1.2.0",
+    "python-dotenv>=1.2.3",
+]
+
+[tool.uv]
+package = false
