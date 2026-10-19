@@ -37,6 +37,34 @@ export function obtenerCategorias() {
   return consultarAPI('/api/categorias/')
 }
 
+// Consultar una categoría por ID
+export function obtenerCategoria(id) {
+  return consultarAPI(`/api/categorias/${id}`)
+}
+
+// Crear una categoría
+export function crearCategoria(categoria) {
+  return consultarAPI('/api/categorias', {
+    method: 'POST',
+    body: categoria,
+  })
+}
+
+// Actualizar una categoría
+export function actualizarCategoria(id, categoria) {
+  return consultarAPI(`/api/categorias/${id}`, {
+    method: 'PUT',
+    body: categoria,
+  })
+}
+
+// Eliminar una categoría
+export function eliminarCategoria(id) {
+  return consultarAPI(`/api/categorias/${id}`, {
+    method: 'DELETE',
+  })
+}
+
 // Medicamentos
 export function obtenerMedicamentos() {
   return consultarAPI('/api/medicamentos/')
