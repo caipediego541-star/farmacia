@@ -1,14 +1,35 @@
 const API_URL = 'http://localhost:5000'
 
-// Función reutilizable para consultar el backend
-async function consultarAPI(endpoint) {
-  const respuesta = await fetch(`${API_URL}${endpoint}`)
+// Función reutilizable para consultar el backend (GET, POST, PUT, DELETE)
+async function consultarAPI(endpoint, opciones = {}) {
+  const { body, ...resto } = opciones
 
-  if (!respuesta.ok) {
-    throw new Error(`Error al consultar la API: ${respuesta.status}`)
+  const configuracion = { ...resto }
+  if (body !== undefined) {
+    configuracion.headers = { 'Content-Type': 'application/json' }
+    configuracion.body = JSON.stringify(body)
   }
 
-  return await respuesta.json()
+  const respuesta = await fetch(`${API_URL}${endpoint}`, configuracion)
+
+  let datos = null
+  try {
+    datos = await respuesta.json()
+  } catch {
+    datos = null
+  }
+
+  if (!respuesta.ok) {
+    // Si el backend mandó un mensaje de error, lo usamos
+    const error = new Error(
+      datos?.error || `Error al consultar la API: ${respuesta.status}`
+    )
+    error.status = respuesta.status
+    error.errores = datos?.errores || {} // errores por campo (validaciones)
+    throw error
+  }
+
+  return datos
 }
 
 // Categorías
@@ -23,7 +44,23 @@ export function obtenerMedicamentos() {
 
 // Empleados
 export function obtenerEmpleados() {
-  return consultarAPI('/api/empleados/')
+  return consultarAPI('/api/empleados')
+}
+
+export function obtenerEmpleado(id) {
+  return consultarAPI(`/api/empleados/${id}`)
+}
+
+export function crearEmpleado(empleado) {
+  return consultarAPI('/api/empleados', { method: 'POST', body: empleado })
+}
+
+export function actualizarEmpleado(id, empleado) {
+  return consultarAPI(`/api/empleados/${id}`, { method: 'PUT', body: empleado })
+}
+
+export function eliminarEmpleado(id) {
+  return consultarAPI(`/api/empleados/${id}`, { method: 'DELETE' })
 }
 
 // Dashboard
