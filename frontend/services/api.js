@@ -66,8 +66,38 @@ export function eliminarCategoria(id) {
 }
 
 // Medicamentos
+
+// Listar todos los medicamentos
 export function obtenerMedicamentos() {
   return consultarAPI('/api/medicamentos/')
+}
+
+// Consultar un medicamento por ID
+export function obtenerMedicamento(id) {
+  return consultarAPI(`/api/medicamentos/${id}`)
+}
+
+// Crear un medicamento
+export function crearMedicamento(medicamento) {
+  return consultarAPI('/api/medicamentos', {
+    method: 'POST',
+    body: medicamento,
+  })
+}
+
+// Actualizar un medicamento
+export function actualizarMedicamento(id, medicamento) {
+  return consultarAPI(`/api/medicamentos/${id}`, {
+    method: 'PUT',
+    body: medicamento,
+  })
+}
+
+// Eliminar un medicamento
+export function eliminarMedicamento(id) {
+  return consultarAPI(`/api/medicamentos/${id}`, {
+    method: 'DELETE',
+  })
 }
 
 // Empleados

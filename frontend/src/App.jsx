@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import { Alert, Box, Container, Divider, Paper, Tab, Tabs } from '@mui/material'
 import Encabezado from './components/Encabezado.jsx'
 import DashboardPage from './pages/DashboardPage.jsx'
 import CategoriasPage from './pages/CategoriasPage.jsx'
 import EmpleadosPage from './pages/EmpleadosPage.jsx'
+import MedicamentosPage from './pages/MedicamentosPage.jsx'
+import { Box, Container, Divider, Paper, Tab, Tabs } from '@mui/material'
 
 function App() {
   const [pestania, setPestania] = useState(0)
@@ -30,11 +31,8 @@ function App() {
         <Box sx={{ p: { xs: 2, sm: 3 } }}>
           {pestania === 0 && <DashboardPage />}
 
-          {pestania === 1 && (
-            <Alert severity="info">
-              La sección de medicamentos todavía está en desarrollo.
-            </Alert>
-          )}
+          {pestania === 1 && <MedicamentosPage />}
+          
 
           {pestania === 2 && <CategoriasPage />}
           {pestania === 3 && <EmpleadosPage />}
